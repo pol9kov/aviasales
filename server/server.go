@@ -10,7 +10,8 @@ import (
 func LoadHandler(w http.ResponseWriter, r *http.Request) {
 	var words = []string{}
 	if err := json.NewDecoder(r.Body).Decode(&words); err != nil {
-		panic(err)
+		log.Print(err)
+		return
 	}
 	r.Body.Close()
 
