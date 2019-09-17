@@ -1,9 +1,10 @@
 package dictionary
 
 import (
-	"github.com/pol9kov/aviasales/sortrunes"
 	"log"
 	"sync"
+
+	"github.com/pol9kov/aviasales/sortrunes"
 )
 
 var (
@@ -11,15 +12,13 @@ var (
 	wordsToDictionary = make(chan []string)
 )
 
-func init() {
-	go func() {
-		for {
-			select {
-			case words := <-wordsToDictionary:
-				writeToDictionary(words)
-			}
+func LaunchWriter() {
+	for {
+		select {
+		case words := <-wordsToDictionary:
+			writeToDictionary(words)
 		}
-	}()
+	}
 }
 
 func Load(words []string) {

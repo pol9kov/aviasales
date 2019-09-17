@@ -4,11 +4,14 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/pol9kov/aviasales/server"
-	"github.com/stretchr/testify/require"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/require"
+
+	"github.com/pol9kov/aviasales/dictionary"
+	"github.com/pol9kov/aviasales/server"
 )
 
 func updateDictionary(t *testing.T, dictionary []string) {
@@ -37,11 +40,13 @@ func checkAnagram(t *testing.T, word string, expectedAnagrams []string) {
 
 func TestAnagram(t *testing.T) {
 
+	go dictionary.LaunchWriter()
+
 	updateDictionary(t, []string{"foobar", "aabb", "baba", "boofar", "test"})
 
-	checkAnagram(t,"foobar", []string{"foobar","boofar"})
-	checkAnagram(t,"raboof", []string{"foobar","boofar"})
-	checkAnagram(t,"abba", []string{"aabb","baba"})
-	checkAnagram(t,"test", []string{"test"})
-	checkAnagram(t,"qwerty", nil)
+	checkAnagram(t, "foobar", []string{"foobar", "boofar"})
+	checkAnagram(t, "raboof", []string{"foobar", "boofar"})
+	checkAnagram(t, "abba", []string{"aabb", "baba"})
+	checkAnagram(t, "test", []string{"test"})
+	checkAnagram(t, "qwerty", nil)
 }

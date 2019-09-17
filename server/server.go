@@ -2,9 +2,10 @@ package server
 
 import (
 	"encoding/json"
-	"github.com/pol9kov/aviasales/dictionary"
 	"log"
 	"net/http"
+
+	"github.com/pol9kov/aviasales/dictionary"
 )
 
 func LoadHandler(w http.ResponseWriter, r *http.Request) {
